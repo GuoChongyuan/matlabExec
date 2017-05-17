@@ -29,7 +29,7 @@ start_tempature=100;         %初始温度
 attenuation_factor = 0.99;%衰减因子
 pi = 3.1415926;
 iter=500;                  %内部蒙特卡洛循环迭代次数
-count = 1000;%迭代总次数
+count = 100;%迭代总次数
 
 number = 1 : count + 1;
 
@@ -49,7 +49,7 @@ tmp_coordinate.y = target_coordinate.y;
 
 
 %% 退火算法进行计算
-for k = 1 : count + 1 %最终的时候能够到达能量最小值0
+for k = 1 : count - 1 %最终的时候能够到达能量最小值0
     for i = 1:iter  %多次迭代扰动，一种蒙特卡洛方法，温度降低之前多次实验
             min_sum_1 = sonar_error_min(trans_coordinate,return_roordinate,target_coordinate,...
                               trans_to_target_length,trans_to_return_length,trans_to_target_trangle,return_to_target_trangle);        %计算原目标函数的最小值 
@@ -76,9 +76,6 @@ end
 %%
 figure(1);
 coordinate_plot(trans_coordinate,return_roordinate,target_coordinate)%最终目标位置 
-
-figure(2)
-plot(number,min_sum);
 
 target_coordinate.x
 target_coordinate.y

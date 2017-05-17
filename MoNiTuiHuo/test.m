@@ -21,15 +21,11 @@ target_coordinate.y = 0.1;
 x_radio = 1;
 y_radio = 1;
 
-% 设置搜索范围
-x  = -20 : 20;
-y  = -20 : 20;
-
 start_tempature=100;         %初始温度
 attenuation_factor = 0.99;%衰减因子
 pi = 3.1415926;
 iter=500;                  %内部蒙特卡洛循环迭代次数
-count = 1000;%迭代总次数
+count = 100;%迭代总次数
 
 number = 1 : count - 1;
 
@@ -47,8 +43,7 @@ tmp_coordinate = struct();
 tmp_coordinate.x = target_coordinate.x;
 tmp_coordinate.y = target_coordinate.y;
 
-for m = 1 : 10
-    %% 退火算法进行计算
+%% 退火算法进行计算
     for k = 1 : count - 1 %最终的时候能够到达能量最小值0
         for i = 1:iter  %多次迭代扰动，一种蒙特卡洛方法，温度降低之前多次实验
                 min_sum_1 = sonar_error_min(trans_coordinate,return_roordinate,target_coordinate,...
@@ -72,25 +67,45 @@ for m = 1 : 10
         start_tempature = tmp_start_tempature;
         min_sum(k) = sonar_error_min(trans_coordinate,return_roordinate,target_coordinate,...
                               trans_to_target_length,trans_to_return_length,trans_to_target_trangle,return_to_target_trangle);   %每次迭代后的目标函数的最小值
-        target(k) = target_coordinate.x;
     end
 %%
-
-target_x(m) = target_coordinate.y;
-end
 figure(1);
 coordinate_plot(trans_coordinate,return_roordinate,target_coordinate)%最终目标位置 
+xlabel('x方向(单位:km)') 
+ylabel('y方向(单位:km)') 
+title('模拟退火算法求解最优解后目标的位置图解') 
+
 
 figure(2)
 plot(number,min_sum);
+xlabel('模拟迭代的次数') 
+ylabel('在每一次退火迭代的最优解下的目标函数') 
+title('模拟退火算法的收敛性') 
 
+%% 刻画GDOP
+% 设置搜索范围
+x  = -20 : 20;
+y  = -20 : 20;
+
+n = 41;
+%形成矩阵
+for i = 1 : n
+    for j = 1 : n
+        result(i,j) = norm([x(i),y(j)]-[target_coordinate.x,target_coordinate.y]); %针对于当前点的GDOP误差
+    end
+end
+
+%% 最小误差求解
 figure(3)
-n = 1 : count - 1;
-plot(n,target);
+mesh(x,y,result)
+xlabel('x方向(单位:km)') 
+ylabel('y方向(单位:km)') 
+zlabel('误差值') 
+title('基于发射基站的误差GDOP图') 
 
-
-figure(4)
-z = 1 : 10;
-plot(z,target_x);
-target_coordinate.x
-target_coordinate.y
+figure(4); 
+[c,handle]=contour(x,y,result,5);%[c,h]=contour(x,y,z);  %c存放等高线上点对应的x和y，c的第一行点x值，第二行存点y值；h为等高线的句柄  
+clabel(c,handle);%添加高度标签，h_clabel为高度标签的句柄 
+xlabel('x方向(单位:km)') 
+ylabel('y方向(单位:km)')
+title('基于发射基站的误差GDOP图') 
