@@ -10,16 +10,15 @@ trans_coordinate.y = 0;
 
 %初始化接收机坐标
 return_coordinate = struct();
-return_coordinate.x = 7.5;
-return_coordinate.y = 0;
+return_coordinate.x = 0;
+return_coordinate.y = -7.5;
 
 correlation = 0.2;
-trans_to_return_length_e = 0.0015;
+trans_to_return_length_e = 0.02;
 
 %基于接收站参数
-trans_target_length_e = 0.075;
-trans_target_return_length_e = 0.1;
-retutn_to_target_trangle_e = 0.0005;
+trans_target_length_e = 0.0075;
+trans_target_return_length_e = 0.01;
 
 
 %% 设置搜索范围

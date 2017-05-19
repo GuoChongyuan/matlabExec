@@ -13,12 +13,11 @@ return_coordinate = struct();
 return_coordinate.x = 7.5;
 return_coordinate.y = 0;
 
-trans_to_return_length_e = 0.0015;
+trans_to_return_length_e = 0.02;
 
 %基于接收站参数
-trans_target_return_length_e = 0.0075;
-retutn_to_target_trangle_e = 0.0005;%误差参数中并没有该因子，但是后问中说明显提高了精度，不理解
-
+trans_target_return_length_e = 0.015;
+retutn_to_target_trangle_e = 0.0005;
 
 %% 设置搜索范围
 x  = -20 : 20;

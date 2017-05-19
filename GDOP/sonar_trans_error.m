@@ -8,11 +8,11 @@ trans_coordinate = struct();
 trans_coordinate.x = 0;
 trans_coordinate.y = 0;
 
-trans_to_return_length_e = 0.0015;
+trans_to_return_length_e = 0.015;
 
 %»ùÓÚ·¢ÉäÕ¾
-trans_to_target_length_e = 0.0075;
-trans_to_target_trangle_e = 0.0005;
+trans_to_target_length_e = 0.02;
+trans_to_target_trangle_e = 0.0015;
 
 
 %% ÉèÖÃËÑË÷·¶Î§
